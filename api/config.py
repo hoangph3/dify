@@ -62,6 +62,7 @@ DEFAULTS = {
     'KEYWORD_STORE': 'jieba',
     'BATCH_UPLOAD_LIMIT': 20,
     'TOOL_ICON_CACHE_MAX_AGE': 3600,
+    'ENTERPRISE_ENABLED': 'False',
 }
 
 
@@ -302,6 +303,8 @@ class Config:
 
         self.API_COMPRESSION_ENABLED = get_bool_env('API_COMPRESSION_ENABLED')
         self.TOOL_ICON_CACHE_MAX_AGE = get_env('TOOL_ICON_CACHE_MAX_AGE')
+
+        self.ENTERPRISE_ENABLED = get_bool_env('ENTERPRISE_ENABLED')
 
 
 class CloudEditionConfig(Config):
