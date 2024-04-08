@@ -62,7 +62,7 @@ gtag('config', 'AW-11217955271"');
             </>
           )}
           {enterpriseFeatures.sso_enforced_for_signin && (
-            <EnterpriseSSOForm protocol={enterpriseFeatures.sso_enforced_protocol} />
+            <EnterpriseSSOForm protocol={enterpriseFeatures.sso_enforced_for_signin_protocol} />
           )}
         </div>
 
