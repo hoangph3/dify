@@ -127,6 +127,11 @@ class Config:
         # Alternatively you can set it with `SECRET_KEY` environment variable.
         self.SECRET_KEY = get_env('SECRET_KEY')
 
+        # Enterprise Edition
+        # Only the inner_api edition can be set to True
+        self.INNER_API = get_bool_env('INNER_API')
+        self.INNER_API_KEY = get_env('INNER_API_KEY')
+
         # cors settings
         self.CONSOLE_CORS_ALLOW_ORIGINS = get_cors_allow_origins(
             'CONSOLE_CORS_ALLOW_ORIGINS', self.CONSOLE_WEB_URL)
