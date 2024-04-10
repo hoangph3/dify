@@ -255,7 +255,7 @@ class TenantService:
         """Get account join tenants"""
         return db.session.query(Tenant).join(
             TenantAccountJoin, Tenant.id == TenantAccountJoin.tenant_id
-        ).filter(TenantAccountJoin.account_id == account.id).all()
+        ).filter(TenantAccountJoin.account_id == account.id, Tenant.status == TenantStatus.NORMAL).all()
 
     @staticmethod
     def get_current_tenant_by_account(account: Account):
@@ -279,7 +279,12 @@ class TenantService:
         if tenant_id is None:
             raise ValueError("Tenant ID must be provided.")
 
-        tenant_account_join = TenantAccountJoin.query.filter_by(account_id=account.id, tenant_id=tenant_id).first()
+        tenant_account_join = db.session.query(TenantAccountJoin).join(Tenant, TenantAccountJoin.tenant_id == Tenant.id).filter(
+            TenantAccountJoin.account_id == account.id,
+            TenantAccountJoin.tenant_id == tenant_id,
+            Tenant.status == TenantStatus.NORMAL,
+        ).first()
+
         if not tenant_account_join:
             raise AccountNotLinkTenantError("Tenant not found or account is not a member of the tenant.")
         else:
