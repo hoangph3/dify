@@ -8,7 +8,7 @@ from typing import Any, Optional
 
 from flask import current_app
 from sqlalchemy import func
-from werkzeug.exceptions import Forbidden
+from werkzeug.exceptions import Unauthorized
 
 from constants.languages import language_timezone_mapping, languages
 from events.tenant_event import tenant_was_created
@@ -44,7 +44,7 @@ class AccountService:
             return None
 
         if account.status in [AccountStatus.BANNED.value, AccountStatus.CLOSED.value]:
-            raise Forbidden('Account is banned or closed.')
+            raise Unauthorized("Account is banned or closed.")
 
         current_tenant = TenantAccountJoin.query.filter_by(account_id=account.id, current=True).first()
         if current_tenant:

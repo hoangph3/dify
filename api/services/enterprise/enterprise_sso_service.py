@@ -1,6 +1,6 @@
 import logging
 
-from models.account import Account
+from models.account import Account, AccountStatus
 from services.account_service import AccountService, TenantService
 from services.enterprise.base import EnterpriseRequest
 
@@ -47,6 +47,9 @@ class EnterpriseSSOService:
         account = Account.query.filter_by(email=email).first()
         if account is None:
             raise Exception('account not found, please contact system admin to invite you to join in a workspace')
+
+        if account.status == AccountStatus.BANNED:
+            raise Exception('account is banned, please contact system admin')
 
         tenants = TenantService.get_join_tenants(account)
         if len(tenants) == 0:
