@@ -2,7 +2,7 @@ version: '3'
 services:
   # API service
   api:
-    image: langgenius/dify-api:0.6.1
+    image: langgenius/dify-api:0.6.2
     restart: always
     environment:
       # Startup mode, 'api' starts the API server.
@@ -150,7 +150,7 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:0.6.1
+    image: langgenius/dify-api:0.6.2
     restart: always
     environment:
       # Startup mode, 'worker' starts the Celery worker for processing the queue.
@@ -285,8 +285,8 @@ services:
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
     # uncomment to expose redis port to host
-    # ports:
-    #   - "6379:6379"
+    ports:
+      - "6379:6379"
 
   # The Weaviate vector store.
   weaviate:
